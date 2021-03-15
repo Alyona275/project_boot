@@ -21,7 +21,7 @@ public class IndexController {
     private UserService userService;
 
     @Autowired
-    public IndexController (UserService userService) {
+    public IndexController(UserService userService) {
         this.userService = userService;
     }
 
@@ -30,12 +30,18 @@ public class IndexController {
         return "index";
     }
 
-@GetMapping("/registration")
-public String registrationPage(Model model) {
-    model.addAttribute("user", new User());
-    model.addAttribute("roleList", userService.getRoles());
-    return "registration";
-}
+    @GetMapping(value = "/login")
+    public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping("/registration")
+    public String registrationPage(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roleList", userService.getRoles());
+        return "registration";
+    }
+
     @PostMapping(value = "/registration")
     public String registrationUser(@Validated User user,
                                    @RequestParam int[] arrId, BindingResult bindingResult) {
@@ -44,7 +50,7 @@ public String registrationPage(Model model) {
         }
         Set<Role> role = new HashSet<>();
 
-        for (int i = 0; i < arrId.length; i++){
+        for (int i = 0; i < arrId.length; i++) {
             role.add(userService.getRoleById((long) arrId[i]));
         }
         user.setRoles(role);

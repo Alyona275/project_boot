@@ -1,35 +1,35 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add User</title>
-</head>
-<body>
-<th:block>
-    <h2>Add User</h2>
-    <form th:method="POST" th:action="@{/admin/add}">
-        <label for="username">Name</label>
-        <input type="text" th:field="${user.username}" id="username">
-        <br>
-        <label for="age">Age</label>
-        <input type="text" th:field="${user.age}" id="age">
-        <br>
-        <label for="email">Email</label>
-        <input type="text" th:field="${user.email}" id="email">
-        <br>
-        <label for="password">Password</label>
-        <input type="text" th:field="${user.password}" id="password">
-        <br>
-        <th:block th:each="role : ${roleList}">
-            <input type="checkbox" name="arrId" th:value="${role.id}" />
-            <label th:text="${role.name}">Value</label><br>
-        </th:block>
-        <input type="submit" value="Add user">
-    </form>
-</th:block>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Add User</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<th:block>-->
+<!--    <h2>Add User</h2>-->
+<!--    <form th:method="POST" th:action="@{/admin/add}">-->
+<!--        <label for="username">Name</label>-->
+<!--        <input type="text" th:field="${user.username}" id="username">-->
+<!--        <br>-->
+<!--        <label for="age">Age</label>-->
+<!--        <input type="text" th:field="${user.age}" id="age">-->
+<!--        <br>-->
+<!--        <label for="email">Email</label>-->
+<!--        <input type="text" th:field="${user.email}" id="email">-->
+<!--        <br>-->
+<!--        <label for="password">Password</label>-->
+<!--        <input type="text" th:field="${user.password}" id="password">-->
+<!--        <br>-->
+<!--        <th:block th:each="role : ${roleList}">-->
+<!--            <input type="checkbox" name="arrId" th:value="${role.id}" />-->
+<!--            <label th:text="${role.name}">Value</label><br>-->
+<!--        </th:block>-->
+<!--        <input type="submit" value="Add user">-->
+<!--    </form>-->
+<!--</th:block>-->
 
-<a th:href="@{/logout}">Logout</a>
+<!--<a th:href="@{/logout}">Logout</a>-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
