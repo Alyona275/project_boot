@@ -36,13 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        userRepository.saveAndFlush(user);
-    }
-
-    @Override
-    @Transactional
-    public void updateUser(User user) {
+    public void editUser(User user) {
         userRepository.saveAndFlush(user);
     }
 

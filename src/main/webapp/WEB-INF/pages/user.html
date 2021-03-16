@@ -3,28 +3,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>User</title>
 </head>
 <body>
-<h2>User</h2>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Email</th>
-        <th>Roles</th>
-    </tr>
-        <tr>
-            <td th:text="${user.getId()}">VALUE</td>
-            <td th:text="${user.getUsername()}">VALUE</td>
-            <td th:text="${user.getAge()}">value</td>
-            <td th:text="${user.getEmail()}">value</td>
-            <td th:text="${user.getRoles()}">value</td>
-        </tr>
-</table>
 
-<a th:href="@{/logout}">Logout</a>
+<nav class="navbar navbar-dark bg-dark">
+    <div>
+        <a class="text-light font-weight-bold" href="/user" th:text="${user.email}"><b>VALUE</b></a>
+        <span class="navbar-text text-white">with roles: </span>
+        <span class="navbar-text text-white" th:text="${user.getUserRoles()}">VALUE</span>
+    </div>
+    <a class="navbar-text" th:href="@{/logout}">Logout</a>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div id="navbar-div" class="col-2 nav nav-tabs flex-column bg-white pt-4 border-bottom-0">
+            <th:block th:each="role : ${user.getRoles()}">
+                <div th:if="${role.getName().equals('ROLE_ADMIN')}">
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link" href="/admin">Admin</a>
+                    </nav>
+                </div>
+            </th:block>
+            <nav class="nav nav-pills flex-column">
+                <a class="nav-link" href="#user">User</a>
+            </nav>
+        </div>
+        <!--User information-page-->
+        <div class="col-10 flex-column bg-light" data-spy="scroll" data-target="#navbar-div" data-offset="0">
+            <h1 class="my-3" id="user">User information-page</h1>
+            <div class="tab-content border-top border-right border-bottom">
+                <h4 class="pl-3 my-3">About user</h4>
+                <div class="w-100 bg-white py-4 px-4 border-top border-right border-bottom">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Roles</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${user.getId()}">VALUE</td>
+                            <td th:text="${user.getUsername()}">VALUE</td>
+                            <td th:text="${user.getAge()}">value</td>
+                            <td th:text="${user.getEmail()}">value</td>
+                            <td th:text="${user.getUserRoles()}">value</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

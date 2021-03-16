@@ -37,67 +37,29 @@ public class AdminController {
     public String addUser(@ModelAttribute("user") User user,
                           @RequestParam long roleId) {
 
-        System.out.println("add User === " + user);
-        System.out.println("add role === " + roleId);
-
         Set<Role> setRole = new HashSet<>();
         setRole.add(userService.getRoleById(roleId));
 
         user.setRoles(setRole);
-        userService.addUser(user);
+        userService.editUser(user);
         return "redirect:/admin/";
-    }
-//    @GetMapping(value = "/admin/update/{id}")
-//    public User updatePage(@PathVariable("id") long id, Model model) {
-    @GetMapping(value = "/admin/findOne")
-    @ResponseBody
-    public User getUser(long id) {
-        System.out.println("id === "+id);
-//        model.addAttribute("user", userService.getUserById(id));
-//        model.addAttribute("roleList", userService.getRoles());
-        return userService.getUserById(id);
     }
 
     @PostMapping(value = "/admin/update")
-    public String updateUser(User user) {
+    public String updateUser(@ModelAttribute("user") User user,
+                             @RequestParam long updRoleId) {
 
-        System.out.println("update user ===" + user);
+        Set<Role> setRole = new HashSet<>();
+        setRole.add(userService.getRoleById(updRoleId));
 
-//        Set<Role> role = new HashSet<>();
-//
-//        for (int i = 0; i < arrId.length; i++){
-//            role.add(userService.getRoleById((long) arrId[i]));
-//        }
-//
-//        user.setRoles(role);
-//        userService.updateUser(user);
+        user.setRoles(setRole);
+        userService.editUser(user);
         return "redirect:/admin/";
     }
-//    @GetMapping(value = "/admin/add")
-//    public String addPage(Model model) {
-//        model.addAttribute("user", new User());
-//        model.addAttribute("roleList", userService.getRoles());
-//        return "addUserPage";
-//    }
-//    @PostMapping(value = "/admin/add")
-//    public String addUser(@ModelAttribute("user") User user,
-//                          @RequestParam int[] arrId) {
-//
-//        Set<Role> role = new HashSet<>();
-//
-//        for (int i = 0; i < arrId.length; i++){
-//            role.add(userService.getRoleById((long) arrId[i]));
-//        }
-//
-//        user.setRoles(role);
-//        userService.addUser(user);
-//        return "redirect:/admin/";
-//    }
 
-
-    @GetMapping(value = "/admin/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        userService.removeById(id);
+    @PostMapping(value = "/admin/delete")
+    public String deleteUser(@RequestParam long delUserId) {
+        userService.removeById(delUserId);
         return "redirect:/admin/";
     }
 }

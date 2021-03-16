@@ -54,7 +54,7 @@ public class IndexController {
             role.add(userService.getRoleById((long) arrId[i]));
         }
         user.setRoles(role);
-        userService.addUser(user);
+        userService.editUser(user);
 
         return "redirect:/";
     }
