@@ -44,6 +44,13 @@ public class IndexController {
         return "adminPage";
     }
 
+    @GetMapping("/user")
+    public String showUser(Principal principal, Model model) {
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        return "user";
+    }
+
     @GetMapping("/registration")
     public String registrationPage(Model model) {
         model.addAttribute("user", new User());

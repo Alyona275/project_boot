@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,18 +11,6 @@
     <title>Users</title>
 </head>
 <body>
-<!--Navbar-->
-<!--<nav class="navbar navbar-dark bg-dark">-->
-<!--    <div>-->
-<!--        <span class="text-light font-weight-bold" th:text="${principal.username}"><b>VALUE</b></span>-->
-<!--        <span class="navbar-text text-white">with roles: </span>-->
-<!--        <th:block th:each="authority : ${#authentication.getAuthorities()}">-->
-<!--            <span class="navbar-text text-white"-->
-<!--                  th:text="${authority.getAuthority().replaceFirst('ROLE_', ' ')}">VALUE</span>-->
-<!--        </th:block>-->
-<!--    </div>-->
-<!--    <a class="navbar-text" th:href="@{/logout}">Logout</a>-->
-<!--</nav>-->
 <nav class="navbar navbar-dark bg-dark">
     <div>
         <a class="text-light font-weight-bold" href="/user" th:text="${authUser.email}"><b>VALUE</b></a>
@@ -43,8 +30,9 @@
                 <a class="nav-link" href="/user">User</a>
             </nav>
         </div>
-        <!--Admin panel-->
+
         <div class="col-10 flex-column bg-light" data-spy="scroll" data-target="#navbar-div" data-offset="0">
+            <!--Admin panel-->
             <h1 class="my-3" id="admin">Admin panel</h1>
             <div>
                 <ul class="nav nav-tabs">
@@ -72,32 +60,6 @@
                                 </tr>
                                 </thead>
                                 <tbody id="table_body_users">
-                                <!--                                <th:block th:each="user : ${userList}">-->
-                                <!--                                    <tr>-->
-                                <!--                                        <td th:text="${user.getId()}">VALUE</td>-->
-                                <!--                                        <td th:text="${user.getUsername()}">VALUE</td>-->
-                                <!--                                        <td th:text="${user.getAge()}">value</td>-->
-                                <!--                                        <td th:text="${user.getEmail()}">value</td>-->
-                                <!--                                        <td th:text="${user.getUserRoles()}">value</td>-->
-                                <!--                                        <td>-->
-                                <!--                                            <button type="button" class="btn btn-info"-->
-                                <!--                                                    data-toggle="modal" data-target=".updateUserForm"-->
-                                <!--                                                    th:attr="data-update-id=${user.id}, data-update-username=''+${user.getUsername()},-->
-                                <!--                                               data-update-age=${user.age}, data-update-email=${user.email},-->
-                                <!--                                               data-update-password=${user.password}">-->
-                                <!--                                                Edit-->
-                                <!--                                            </button>-->
-                                <!--                                        </td>-->
-                                <!--                                        <td>-->
-                                <!--                                            <button type="button" class="btn btn-danger"-->
-                                <!--                                                    data-toggle="modal" data-target=".deleteUserForm"-->
-                                <!--                                                    th:attr="data-delete-id=${user.id}, data-delete-username=''+${user.getUsername()},-->
-                                <!--                                               data-delete-age=${user.age}, data-delete-email=${user.email}">-->
-                                <!--                                                Delete-->
-                                <!--                                            </button>-->
-                                <!--                                        </td>-->
-                                <!--                                    </tr>-->
-                                <!--                                </th:block>-->
                                 </tbody>
                             </table>
                         </div>
@@ -107,37 +69,34 @@
                         <h4 class="pl-3 my-3">Add new user</h4>
                         <div class="bg-white border" style="text-align: center">
                             <div class="d-flex justify-content-center my-3">
-                                <!--                                <form style="width: 30%" th:method="POST" th:action="@{/admin}">-->
-                                <!--                                    <div class="form-group">-->
-                                <!--                                        <label class="font-weight-bold mb-0" for="username">Name</label>-->
-                                <!--                                        <input type="text" class="form-control form-control-sm"-->
-                                <!--                                               th:field="${user.username}" id="username" placeholder="Name">-->
-                                <!--                                    </div>-->
-                                <!--                                    <div class="form-group">-->
-                                <!--                                        <label class="font-weight-bold mb-0" for="age">Age</label>-->
-                                <!--                                        <input type="number" class="form-control form-control-sm"-->
-                                <!--                                               th:field="${user.age}" id="age" placeholder="Age">-->
-                                <!--                                    </div>-->
-                                <!--                                    <div class="form-group">-->
-                                <!--                                        <label class="font-weight-bold mb-0" for="email">Email</label>-->
-                                <!--                                        <input type="email" class="form-control form-control-sm"-->
-                                <!--                                               th:field="${user.email}" id="email" placeholder="Email">-->
-                                <!--                                    </div>-->
-                                <!--                                    <div class="form-group">-->
-                                <!--                                        <label class="font-weight-bold mb-0" for="password">Password</label>-->
-                                <!--                                        <input type="password" class="form-control form-control-sm"-->
-                                <!--                                               th:field="${user.password}" id="password" placeholder="Password">-->
-                                <!--                                    </div>-->
-                                <!--                                    <div class="form-group">-->
-                                <!--                                        <label class="font-weight-bold mb-0">Role</label>-->
-                                <!--                                        <select class="custom-select" name="roleId" size="2">-->
-                                <!--                                            <th:block th:each="role : ${roleList}">-->
-                                <!--                                                <option th:value="${role.id}" th:text="${role.name}">Value</option>-->
-                                <!--                                            </th:block>-->
-                                <!--                                        </select>-->
-                                <!--                                    </div>-->
-                                <!--                                    <button class="btn btn-success" type="submit">Add new user</button>-->
-                                <!--                                </form>-->
+                                <form style="width: 30%" id="tegFormAddUser" method="post" action="/admin/addUser"
+                                      onsubmit="sendUser(event, this); resetForm('tegFormAddUser')">
+                                    <input type="text" style="display: none"
+                                           name="id"/>
+                                    <label class="font-weight-bold mb-0"
+                                           for="addUsername">Name</label>
+                                    <input type="text" name="username"
+                                           class="form-control form-control-sm" id="addUsername"
+                                           placeholder="Name">
+                                    <label class="font-weight-bold mb-0" for="addAge">Age</label>
+                                    <input type="number" name="age" value="0"
+                                           class="form-control form-control-sm" id="addAge"
+                                           placeholder="Age">
+                                    <label class="font-weight-bold mb-0"
+                                           for="addEmail">Email</label>
+                                    <input type="email" name="email"
+                                           class="form-control form-control-sm" id="addEmail"
+                                           placeholder="Email">
+                                    <label class="font-weight-bold mb-0"
+                                           for="addPassword">Password</label>
+                                    <input type="password" name="password"
+                                           class="form-control form-control-sm" id="addPassword"
+                                           placeholder="Password">
+                                    <label class="font-weight-bold mb-0">Role</label>
+                                    <select class="custom-select" name="roles" id="addRoles" size="2" multiple required>
+                                    </select>
+                                    <button class="btn btn-success" type="submit">Add new user</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -152,7 +111,8 @@
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="tegFormEditUser">
+            <form id="tegFormEditUser" method="post" action="/admin/update"
+                  onsubmit="sendUser(event, this); closeModal('.updateUserForm')">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitle">Edit user</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -164,70 +124,30 @@
                         <div style="width: 35%">
                             <label class="font-weight-bold mb-0" for="updId">ID</label>
                             <input type="text" class="form-control form-control-sm"
-                                   id="updId" readonly/>
+                                   id="updId" name="id" readonly/>
                             <label class="font-weight-bold mb-0" for="updUsername">Name</label>
                             <input type="text" class="form-control form-control-sm"
-                                   id="updUsername"/>
+                                   id="updUsername" name="username"/>
                             <label class="font-weight-bold mb-0" for="updAge">Age</label>
                             <input type="number" class="form-control form-control-sm"
-                                   id="updAge"/>
+                                   id="updAge" name="age"/>
                             <label class="font-weight-bold mb-0" for="updEmail">Email</label>
                             <input type="email" class="form-control form-control-sm"
-                                   id="updEmail"/>
+                                   id="updEmail" name="email"/>
                             <label class="font-weight-bold mb-0" for="updPassword">Password</label>
                             <input type="password" class="form-control form-control-sm"
-                                   id="updPassword" placeholder=""/>
+                                   id="updPassword" name="password" placeholder=""/>
                             <label class="font-weight-bold mb-0">Role</label>
-                            <select class="custom-select" name="updRoleId" id="updRoles" size="2">
-<!--                                    <option th:value="${role.id}" th:text="${role.name}">Value</option>-->
+                            <select class="custom-select" id="updRoles" name="roles" size="2" multiple required>
                             </select>
                         </div>
                     </div>
                 </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" value="Edit"/>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" id="btnEditUser" value="Edit"/>
+                </div>
             </form>
-            <!--            <form method="post" th:action="@{/admin/update}">-->
-            <!--                <div class="modal-header">-->
-            <!--                    <h5 class="modal-title" id="modalTitle">Edit user</h5>-->
-            <!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-            <!--                        <span aria-hidden="true">&times;</span>-->
-            <!--                    </button>-->
-            <!--                </div>-->
-            <!--                <div class="modal-body">-->
-            <!--                    <div class="d-flex justify-content-center my-3 text-center">-->
-            <!--                        <div style="width: 35%">-->
-            <!--                            <label class="font-weight-bold mb-0" for="updId">ID</label>-->
-            <!--                            <input type="text" class="form-control form-control-sm"-->
-            <!--                                   id="updId" th:field="${user.id}" readonly/>-->
-            <!--                            <label class="font-weight-bold mb-0" for="updUsername">Name</label>-->
-            <!--                            <input type="text" class="form-control form-control-sm"-->
-            <!--                                   id="updUsername" th:field="${user.username}"/>-->
-            <!--                            <label class="font-weight-bold mb-0" for="updAge">Age</label>-->
-            <!--                            <input type="number" class="form-control form-control-sm"-->
-            <!--                                   id="updAge" th:field="${user.age}"/>-->
-            <!--                            <label class="font-weight-bold mb-0" for="updEmail">Email</label>-->
-            <!--                            <input type="email" class="form-control form-control-sm"-->
-            <!--                                   id="updEmail" th:field="${user.email}"/>-->
-            <!--                            <label class="font-weight-bold mb-0" for="updPassword">Password</label>-->
-            <!--                            <input type="password" class="form-control form-control-sm"-->
-            <!--                                   id="updPassword" th:field="${user.password}" placeholder=""/>-->
-            <!--                            <label class="font-weight-bold mb-0">Role</label>-->
-            <!--                            <select class="custom-select" name="updRoleId" id="updRoles" size="2">-->
-            <!--                                <th:block th:each="role : *{roleList}">-->
-            <!--                                    <option th:value="${role.id}" th:text="${role.name}">Value</option>-->
-            <!--                                </th:block>-->
-            <!--                            </select>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                    <div class="modal-footer">-->
-            <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-            <!--                        <input type="submit" class="btn btn-primary" value="Edit"/>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </form>-->
         </div>
     </div>
 </div>
@@ -237,44 +157,41 @@
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <!--            <form method="post" th:action="@{/admin/delete}">-->
-            <!--                <div class="modal-header">-->
-            <!--                    <h5 class="modal-title" id="modalTitleDelete">Delete user</h5>-->
-            <!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-            <!--                        <span aria-hidden="true">&times;</span>-->
-            <!--                    </button>-->
-            <!--                </div>-->
-            <!--                <div class="modal-body">-->
-            <!--                    <div class="d-flex justify-content-center my-3 text-center">-->
-            <!--                        <div style="width: 35%">-->
-            <!--                                <label class="font-weight-bold mb-0" for="delId">ID</label>-->
-            <!--                                <input type="text" class="form-control form-control-sm" name="delUserId"-->
-            <!--                                       id="delId" readonly/>-->
-            <!--                            <fieldset disabled>-->
-            <!--                                <label class="font-weight-bold mb-0" for="delUsername">Name</label>-->
-            <!--                                <input type="text" class="form-control form-control-sm"-->
-            <!--                                       id="delUsername"/>-->
-            <!--                                <label class="font-weight-bold mb-0" for="delAge">Age</label>-->
-            <!--                                <input type="number" class="form-control form-control-sm"-->
-            <!--                                       id="delAge"/>-->
-            <!--                                <label class="font-weight-bold mb-0" for="delEmail">Email</label>-->
-            <!--                                <input type="email" class="form-control form-control-sm"-->
-            <!--                                       id="delEmail"/>-->
-            <!--                                <label class="font-weight-bold mb-0">Role</label>-->
-            <!--                                <select class="custom-select" id="delRoles" size="2">-->
-            <!--                                    <th:block th:each="role : *{roleList}">-->
-            <!--                                        <option th:value="${role.id}" th:text="${role.name}">Value</option>-->
-            <!--                                    </th:block>-->
-            <!--                                </select>-->
-            <!--                            </fieldset>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                    <div class="modal-footer">-->
-            <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-            <!--                        <input type="submit" class="btn btn-danger" value="Delete"/>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </form>-->
+            <form method="post" action="/admin/delete" onsubmit="sendUser(event, this); closeModal('.deleteUserForm')">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleDelete">Delete user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center my-3 text-center">
+                        <div style="width: 35%">
+                            <label class="font-weight-bold mb-0" for="delId">ID</label>
+                            <input type="text" class="form-control form-control-sm" name="id"
+                                   id="delId" readonly/>
+                            <fieldset disabled>
+                                <label class="font-weight-bold mb-0" for="delUsername">Name</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       id="delUsername" name="username"/>
+                                <label class="font-weight-bold mb-0" for="delAge">Age</label>
+                                <input type="number" class="form-control form-control-sm"
+                                       id="delAge" name="age"/>
+                                <label class="font-weight-bold mb-0" for="delEmail">Email</label>
+                                <input type="email" class="form-control form-control-sm"
+                                       id="delEmail" name="email"/>
+                                <label class="font-weight-bold mb-0">Role</label>
+                                <select class="custom-select" id="delRoles" size="2" name="roles">
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-danger" value="Delete"/>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -290,108 +207,135 @@
         crossorigin="anonymous"></script>
 
 <script>
+    $(document).ready(tableAllUsers());
 
-    fetch("/admin/allusers").then(
-        res => {
-            res.json().then(
-                data => {
-                    var usersTable = $("#table_head_users").find("#table_body_users");
-                    for (var i = 0; i < data.length; i++) {
+    function tableAllUsers() {
+        fetch("/admin/allusers").then(
+            res => {
+                res.json().then(
+                    data => {
+                        let usersTable = $("#table_head_users").find("#table_body_users");
+                        usersTable.empty();
+                        for (let i = 0; i < data.length; i++) {
 
-                        var userId = "<td>" + data[i].id + "</td>";
-                        var userName = "<td>" + data[i].username + "</td>";
-                        var userAge = "<td>" + data[i].age + "</td>";
-                        var userEmail = "<td>" + data[i].email + "</td>";
-                        var userRoles = "<td>" + data[i].userRoles + "</td>";
-                        var editUser = "<td><button type='button' class='btn btn-info'" +
-                            "data-toggle='modal' data-target='.updateUserForm' data-update-id='" + data[i].id + "' >" +
-                            "Edit</button></td>";
-                        var deleteUser = "<td><button type='button' class='btn btn-danger' data-toggle='modal' " +
-                            "data-target='.deleteUserForm' data-delete-id='" + data[i].id + "'>Delete</button></td>"
-                            // var editUser = "<td><a href='/admin/findOne'  class='btn btn-info'>Edit</a></td>";
-                            // var deleteUser = "<td><a href='/admin/findOne/(id=" + data[i].id + ")' class='btn btn-danger'>Delete</a></td>";
+                            let userId = "<td>" + data[i].id + "</td>";
+                            let userName = "<td>" + data[i].username + "</td>";
+                            let userAge = "<td>" + data[i].age + "</td>";
+                            let userEmail = "<td>" + data[i].email + "</td>";
+                            let userRoles = "<td>" + data[i].userRoles + "</td>";
+                            let editUser = "<td><button type='button' class='btn btn-info'" +
+                                "data-toggle='modal' data-target='.updateUserForm' data-update-id='" + data[i].id + "' >" +
+                                "Edit</button></td>";
+                            let deleteUser = "<td><button type='button' class='btn btn-danger' data-toggle='modal' " +
+                                "data-target='.deleteUserForm' data-delete-id='" + data[i].id + "'>Delete</button></td>"
 
-                            userTR = "<tr>" + userId + userName + userAge + userEmail + userRoles + editUser + deleteUser + "</tr>";
+                            let userTR = "<tr>" + userId + userName + userAge + userEmail + userRoles + editUser + deleteUser + "</tr>";
 
-                        usersTable.append(userTR);
+                            usersTable.append(userTR);
+                        }
                     }
-                }
-            );
-        }
-    );
-
-    // $(function () {
-    //     loadAllUsers();
-    // });
-    //
-    // function loadAllUsers() {
-    //     $("#table_body_users").empty();
-    //
-    //     $.ajax({
-    //         url: '/admin',
-    //         method: 'get',
-    //         dataType: 'json',
-    //         success: function (data) {
-    //             console.log("инф data === " + data);
-    //             $.each(data, function (index, employe) {
-    //                 var usersTable = $("#table_head_users").find("#table_body_users");
-    //
-    //                 var userId = "<td>" + employe.id + "</td>";
-    //                 var userName = "<td>" + employe.name + "</td>";
-    //                 var userAge = "<td>" + employe.age + "</td>";
-    //                 var userEmail = "<td>" + employe.email + "</td>";
-    //                 var userRoles = "<td>" + employe.userRoles + "</td>";
-    //
-    //                 var userTR = "<tr>" + userId + userName + userAge + userEmail + userRoles + "</tr>";
-    //                 usersTable.append(userTR);
-    //             });
-    //         }
-    //     });
-    // }
+                );
+            }
+        );
+    }
 
     $('.updateUserForm').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var userId = button.data('update-id');
 
         var objUser = findOne(userId);
-        console.log(objUser);
+        objUser.then(
+            valUser => {
+                $(this).find('#updId').val(valUser.id);
+                $(this).find('#updUsername').val(valUser.username);
+                $(this).find('#updAge').val(valUser.age);
+                $(this).find('#updEmail').val(valUser.email);
+                $(this).find('#updPassword').val(valUser.password);
+            }
+        );
+        allRoles($(this), '#updRoles');
+    });
+
+    $('.deleteUserForm').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var userId = button.data('delete-id');
+
+        var objUser = findOne(userId);
+        objUser.then(
+            valUser => {
+                $(this).find('#delId').val(valUser.id);
+                $(this).find('#delUsername').val(valUser.username);
+                $(this).find('#delAge').val(valUser.age);
+                $(this).find('#delEmail').val(valUser.email);
+            }
+        );
+        allRoles($(this), '#delRoles');
     });
 
     async function findOne(id) {
-        let response = await fetch("/admin/findOne/"+ id);
+        let response = await fetch("/admin/findOne/" + id);
         return await response.json();
     }
 
-    // $('.updateUserForm').on('show.bs.modal', function (event) {
-    //
-    //     var button = $(event.relatedTarget);
-    //
-    //     var userId = button.data('update-id');
-    //     var userUsername = button.data('update-username');
-    //     var userAge = button.data('update-age');
-    //     var userEmail = button.data('update-email');
-    //     var userPassword = button.data('update-password');
-    //
-    //     $(this).find('#updId').val(userId);
-    //     $(this).find('#updUsername').val(userUsername);
-    //     $(this).find('#updAge').val(userAge);
-    //     $(this).find('#updEmail').val(userEmail);
-    //     $(this).find('#updPassword').val(userPassword);
-    // });
-    //
-    // $('.deleteUserForm').on('show.bs.modal', function (event) {
-    //     var button = $(event.relatedTarget);
-    //
-    //     var userId = button.data('delete-id');
-    //     var userUsername = button.data('delete-username');
-    //     var userAge = button.data('delete-age');
-    //     var userEmail = button.data('delete-email');
-    //
-    //     $(this).find('#delId').val(userId);
-    //     $(this).find('#delUsername').val(userUsername);
-    //     $(this).find('#delAge').val(userAge);
-    //     $(this).find('#delEmail').val(userEmail);
-    // });
+    allRoles($('#tegFormAddUser'), '#addRoles');
+
+    async function allRoles(tegForm, selectRole) {
+        fetch("/admin/allRoles").then(
+            res => {
+                res.json().then(
+                    data => {
+                        let selectUser = tegForm.find(selectRole);
+                        for (let i = 0; i < data.length; i++) {
+                            let optUser = "<option value='" + data[i].id + "'>" + data[i].name.replace("ROLE_", "") + "</option>";
+                            selectUser.append(optUser);
+                        }
+                    }
+                );
+            }
+        );
+    }
+
+    async function sendUser(e, form) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        let user = {
+            id: formData.get("id"),
+            username: formData.get("username"),
+            age: formData.get("age"),
+            email: formData.get("email"),
+            password: formData.get("password"),
+            roles: JSON.stringify(formData.getAll("roles"))
+        }
+
+        await fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then(
+            res => {
+                res.text().then(resText => {
+                    console.log(resText);
+                    if (resText == "ok") {
+                        tableAllUsers();
+                        alert("Пользователь изменен");
+                    }
+                });
+
+            }
+        );
+    }
+
+    function resetForm(formId) {
+        document.getElementById(formId).reset();
+    }
+
+    function closeModal(modalClass) {
+        $(modalClass).modal('hide');
+    }
 </script>
 
 </body>
