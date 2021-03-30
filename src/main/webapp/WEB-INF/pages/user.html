@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,24 +13,15 @@
 <body>
 
 <nav class="navbar navbar-dark bg-dark">
-    <div>
-        <a class="text-light font-weight-bold" href="/user" th:text="${user.email}"><b>VALUE</b></a>
-        <span class="navbar-text text-white">with roles: </span>
-        <span class="navbar-text text-white" th:text="${user.getUserRoles()}">VALUE</span>
+    <div id="div_navbar_header">
     </div>
-    <a class="navbar-text" th:href="@{/logout}">Logout</a>
+    <a class="navbar-text" href="/logout">Logout</a>
 </nav>
 
 <div class="container-fluid">
     <div class="row">
         <div id="navbar-div" class="col-2 nav nav-tabs flex-column bg-white pt-4 border-bottom-0">
-            <th:block th:each="role : ${user.getRoles()}">
-                <div th:if="${role.getName().equals('ROLE_ADMIN')}">
-                    <nav class="nav nav-pills flex-column">
-                        <a class="nav-link" href="/admin">Admin</a>
-                    </nav>
-                </div>
-            </th:block>
+            <div id="page_admin"></div>
             <nav class="nav nav-pills flex-column">
                 <a class="nav-link" href="#user">User</a>
             </nav>
@@ -75,6 +66,19 @@
         res => {
             res.json().then(
                 data => {
+                    let navbar = $("#div_navbar_header");
+                    let tegA = "<a class='text-light font-weight-bold' href='/user'>" + data.email + "</a>";
+                    let span = "<span class='navbar-text text-white'> with roles: " + data.userRoles + "</span>";
+                    navbar.append(tegA + " " + span);
+
+                    for (const role in data.roles) {
+                        if (data.roles[role].name == "ROLE_ADMIN") {
+                            let navAdmin = "<nav class='nav nav-pills flex-column'>" +
+                                "<a class='nav-link' href='/admin'>Admin</a></nav>";
+                            $("#navbar-div").append(navAdmin);
+                        }
+                    }
+
                     let userTable = $("#table_user_inf").find("#tbody_user");
 
                     let userId = "<td>" + data.id + "</td>";

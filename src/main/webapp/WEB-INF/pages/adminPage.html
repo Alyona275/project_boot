@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,12 +12,9 @@
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark">
-    <div>
-        <a class="text-light font-weight-bold" href="/user" th:text="${authUser.email}"><b>VALUE</b></a>
-        <span class="navbar-text text-white">with roles: </span>
-        <span class="navbar-text text-white" th:text="${authUser.getUserRoles()}">VALUE</span>
+    <div id="div_navbar_header">
     </div>
-    <a class="navbar-text" th:href="@{/logout}">Logout</a>
+    <a class="navbar-text" href="/logout">Logout</a>
 </nav>
 
 <div class="container-fluid">
@@ -207,6 +204,18 @@
         crossorigin="anonymous"></script>
 
 <script>
+    fetch("/user/authUser").then(
+        res => {
+            res.json().then(
+                data => {
+                    let navbar = $("#div_navbar_header");
+                    let tegA = "<a class='text-light font-weight-bold' href='/user'>" + data.email + "</a>";
+                    let span = "<span class='navbar-text text-white'>with roles: " + data.userRoles + "</span>";
+                    navbar.append(tegA + " " + span);
+                }
+            );
+        }
+    );
     $(document).ready(tableAllUsers());
 
     function tableAllUsers() {

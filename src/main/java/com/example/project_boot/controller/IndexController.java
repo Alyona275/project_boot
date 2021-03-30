@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,17 +36,12 @@ public class IndexController {
     }
 
     @GetMapping(value = "/admin")
-    public String adminPage(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-
-        model.addAttribute("authUser", user);
+    public String adminPage() {
         return "adminPage";
     }
 
     @GetMapping("/user")
-    public String showUser(Principal principal, Model model) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("user", user);
+    public String showUser() {
         return "user";
     }
 
